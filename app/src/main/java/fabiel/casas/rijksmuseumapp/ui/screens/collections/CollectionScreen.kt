@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
@@ -81,30 +82,23 @@ private fun CollectionContent(
         LazyColumn(
             contentPadding = paddingValues,
             content = {
-                if (lazyPagingItems.loadState.refresh == LoadState.Loading) {
-                    item {
-                        Text(
-                            text = stringResource(R.string.waiting_for_items),
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .wrapContentWidth(Alignment.CenterHorizontally)
-                        )
-                    }
-                }
                 val derivedGroup = derivedStateOf {
                     lazyPagingItems.groupBy { it.author }
                 }
                 derivedGroup.value.keys.toList()
                     .forEach { header ->
                         stickyHeader {
-                            Surface {
+                            Surface(
+                                color = MaterialTheme.colorScheme.primaryContainer,
+                                contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                            ) {
                                 Text(
                                     modifier = Modifier
                                         .padding(horizontal = 16.dp, vertical = 8.dp)
                                         .fillMaxWidth(),
                                     text = header,
                                     style = MaterialTheme.typography.bodyMedium,
-                                    color = MaterialTheme.colorScheme.tertiary,
+                                    fontWeight = FontWeight.SemiBold,
                                     maxLines = 1,
                                 )
                             }
