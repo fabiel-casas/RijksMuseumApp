@@ -35,7 +35,8 @@ class RijksMuseumUseCaseImpl(
         objectNumber = objectNumber,
         collectionTitle = title,
         description = longTitle,
-        imageUrl = headerImage.url,
-        webImageUrl = webImage.url,
+        author = principalOrFirstMaker,
+        imageUrl = headerImage?.url.orEmpty(),
+        webImageUrl = webImage?.url.orEmpty(),
     )
 }

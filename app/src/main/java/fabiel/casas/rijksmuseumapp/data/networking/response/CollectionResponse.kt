@@ -15,7 +15,7 @@ data class CollectionResponse(
 
 data class ArtObject(
     val hasImage: Boolean,
-    val headerImage: HeaderImage,
+    val headerImage: HeaderImage?,
     val id: String,
     val links: Links,
     val longTitle: String,
@@ -25,7 +25,7 @@ data class ArtObject(
     val productionPlaces: List<String>,
     val showImage: Boolean,
     val title: String,
-    val webImage: WebImage
+    val webImage: WebImage?
 )
 
 data class CountFacets(
@@ -45,7 +45,7 @@ data class HeaderImage(
     val height: Int,
     val offsetPercentageX: Int,
     val offsetPercentageY: Int,
-    val url: String,
+    val url: String?,
     val width: Int
 )
 
@@ -59,7 +59,7 @@ data class WebImage(
     val height: Int,
     val offsetPercentageX: Int,
     val offsetPercentageY: Int,
-    val url: String,
+    val url: String?,
     val width: Int
 )
 

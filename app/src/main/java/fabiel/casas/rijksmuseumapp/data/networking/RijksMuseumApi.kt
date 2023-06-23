@@ -18,6 +18,7 @@ interface RijksMuseumApi {
         @Query("key") key: String,
         @Query("p") page: Int,
         @Query("ps") pageSize: Int,
+        @Query("s") sortBy: String,
     ): CollectionResponse
 
     @GET("api/{culture}/collection/{objectNumber}")

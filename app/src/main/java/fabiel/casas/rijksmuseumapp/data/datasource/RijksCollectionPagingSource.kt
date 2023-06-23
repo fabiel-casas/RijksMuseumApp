@@ -3,6 +3,7 @@ package fabiel.casas.rijksmuseumapp.data.datasource
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import fabiel.casas.rijksmuseumapp.AppConstants.COLLECTION_PAGE_SIZE
+import fabiel.casas.rijksmuseumapp.AppConstants.COLLECTION_SORT_BY
 import fabiel.casas.rijksmuseumapp.BuildConfig
 import fabiel.casas.rijksmuseumapp.data.networking.RijksMuseumApi
 import fabiel.casas.rijksmuseumapp.data.networking.response.ArtObject
@@ -20,13 +21,14 @@ class RijksCollectionPagingSource(
     override fun getRefreshKey(state: PagingState<Int, ArtObject>): Int? = state.anchorPosition
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ArtObject> {
-        val page = params.key ?: 0
+        val page = params.key ?: 0 // Pagination start from 1
         val result = runCatching {
             rijksMuseumApi.getCollection(
                 culture = getCulture(),
                 key = BuildConfig.MUSEUM_API_KEY, // Configure this constant in the local.properties
-                page = page,
-                pageSize = COLLECTION_PAGE_SIZE
+                page = page + 1,
+                pageSize = COLLECTION_PAGE_SIZE,
+                sortBy = COLLECTION_SORT_BY
             )
         }
         return if (result.isSuccess) {

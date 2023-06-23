@@ -9,6 +9,7 @@ import fabiel.casas.rijksmuseumapp.ui.screens.collections.CollectionState
  */
 object AppConstants {
     const val COLLECTION_PAGE_SIZE = 20
+    const val COLLECTION_SORT_BY = "artist"
 
     val collectionStateSample = CollectionState()
 }

@@ -20,6 +20,7 @@ data class CollectionItemState(
     val objectNumber: String,
     val collectionTitle: String,
     val description: String,
+    val author: String,
     val imageUrl: String,
     val webImageUrl: String,
 ): Serializable
