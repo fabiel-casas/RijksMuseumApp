@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">RijksMuseumApp</string>
+    <string name="collection_title">RijksMuseum</string>
+    <string name="waiting_for_items">Waiting for items to load from the backend</string>
 </resources>

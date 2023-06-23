@@ -94,15 +94,15 @@ val Typography = Typography(
     ),
     labelLarge = TextStyle(
         fontFamily = RalewayFontFamily,
-        fontWeight = FontWeight.Normal,
-        fontSize = 11.sp,
+        fontWeight = FontWeight.Medium,
+        fontSize = 14.sp,
         lineHeight = 16.sp,
         letterSpacing = 0.5.sp
     ),
     labelMedium = TextStyle(
         fontFamily = RalewayFontFamily,
         fontWeight = FontWeight.Light,
-        fontSize = 11.sp,
+        fontSize = 12.sp,
         lineHeight = 16.sp,
         letterSpacing = 0.5.sp
     ),
