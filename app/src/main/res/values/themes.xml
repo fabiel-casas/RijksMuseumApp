@@ -2,4 +2,9 @@
 <resources>
 
     <style name="Theme.RijksMuseumApp" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.RijksMuseumApp.Compat" parent="Theme.AppCompat" >
+        <item name="windowActionBar">false</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 </resources>

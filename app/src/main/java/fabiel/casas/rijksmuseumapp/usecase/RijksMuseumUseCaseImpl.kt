@@ -8,7 +8,9 @@ import androidx.paging.map
 import fabiel.casas.rijksmuseumapp.AppConstants
 import fabiel.casas.rijksmuseumapp.data.datasource.RijksMuseumDataSource
 import fabiel.casas.rijksmuseumapp.data.networking.response.ArtObject
+import fabiel.casas.rijksmuseumapp.data.networking.response.CollectionObjectResponse
 import fabiel.casas.rijksmuseumapp.ui.screens.collections.CollectionItemState
+import fabiel.casas.rijksmuseumapp.ui.screens.details.DetailsState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -20,7 +22,7 @@ import kotlinx.coroutines.flow.map
 class RijksMuseumUseCaseImpl(
     private val pagingSource: PagingSource<Int, ArtObject>,
     private val dataSource: RijksMuseumDataSource,
-): RijksMuseumUseCase {
+) : RijksMuseumUseCase {
     override fun collectionPaginated(): Flow<PagingData<CollectionItemState>> {
         return Pager(PagingConfig(AppConstants.COLLECTION_PAGE_SIZE)) {
             pagingSource
@@ -38,5 +40,21 @@ class RijksMuseumUseCaseImpl(
         author = principalOrFirstMaker,
         imageUrl = headerImage?.url.orEmpty(),
         webImageUrl = webImage?.url.orEmpty(),
+    )
+
+    override suspend fun getCollectionDetails(objectNumber: String): DetailsState {
+        return dataSource.findCollectionObject(objectNumber = objectNumber).toDetail()
+    }
+
+    private fun CollectionObjectResponse.toDetail() = DetailsState(
+        objectNumber = artObject.objectNumber,
+        title = artObject.label?.title ?: artObject.title,
+        imageUrl = artObject.webImage?.url.orEmpty(),
+        authors = artObject.principalMakers.map { it.labelDesc },
+        subTitle = artObject.longTitle,
+        description = artObject.description ?: artObject.label?.description ?: artObjectPage.plaqueDescription
+        ?: artObject.plaqueDescriptionDutch.orEmpty(),
+        presentingDate = artObject.dating.presentingDate,
+        period = artObject.dating.period.toString(),
     )
 }

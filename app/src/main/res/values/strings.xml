@@ -2,4 +2,6 @@
     <string name="app_name">RijksMuseumApp</string>
     <string name="collection_title">RijksMuseum</string>
     <string name="waiting_for_items">Waiting for items to load from the backend</string>
+    <string name="period">Period: %1$s</string>
+    <string name="presenting_date">Presenting date: %1$s</string>
 </resources>

@@ -8,6 +8,7 @@ import fabiel.casas.rijksmuseumapp.data.networking.RetrofitConfiguration
 import fabiel.casas.rijksmuseumapp.data.networking.RijksMuseumApi
 import fabiel.casas.rijksmuseumapp.data.networking.response.ArtObject
 import fabiel.casas.rijksmuseumapp.ui.screens.collections.CollectionViewModel
+import fabiel.casas.rijksmuseumapp.ui.screens.details.CollectionDetailsViewModel
 import fabiel.casas.rijksmuseumapp.usecase.RijksMuseumUseCase
 import fabiel.casas.rijksmuseumapp.usecase.RijksMuseumUseCaseImpl
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -34,5 +35,8 @@ val appModule = module {
     }
     viewModel {
         CollectionViewModel(get())
+    }
+    viewModel {
+        CollectionDetailsViewModel(get())
     }
 }

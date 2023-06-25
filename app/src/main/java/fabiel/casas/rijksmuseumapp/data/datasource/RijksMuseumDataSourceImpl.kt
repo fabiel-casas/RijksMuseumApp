@@ -1,7 +1,9 @@
 package fabiel.casas.rijksmuseumapp.data.datasource
 
+import fabiel.casas.rijksmuseumapp.BuildConfig
 import fabiel.casas.rijksmuseumapp.data.networking.RijksMuseumApi
 import fabiel.casas.rijksmuseumapp.data.networking.response.CollectionObjectResponse
+import fabiel.casas.rijksmuseumapp.getCulture
 
 /**
  * RijksMuseumApp
@@ -12,7 +14,11 @@ class RijksMuseumDataSourceImpl(
     private val rijksMuseumApi: RijksMuseumApi
 ): RijksMuseumDataSource {
     override suspend fun findCollectionObject(objectNumber: String): CollectionObjectResponse {
-        TODO("Not yet implemented")
+        return rijksMuseumApi.getCollectionObject(
+            culture = getCulture(),
+            objectNumber = objectNumber,
+            key = BuildConfig.MUSEUM_API_KEY
+        )
     }
 
 }

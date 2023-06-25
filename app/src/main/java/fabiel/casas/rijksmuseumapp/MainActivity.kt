@@ -1,21 +1,12 @@
 package fabiel.casas.rijksmuseumapp
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import fabiel.casas.rijksmuseumapp.ui.screens.collections.CollectionScreen
-import fabiel.casas.rijksmuseumapp.ui.theme.RijksMuseumAppTheme
+import androidx.appcompat.app.AppCompatActivity
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            RijksMuseumAppTheme {
-                // A surface container using the 'background' color from the theme
-                CollectionScreen(
-                    onNavDetailCollectionAction = {}
-                )
-            }
-        }
+        setContentView(R.layout.main_activity)
     }
 }

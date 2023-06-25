@@ -3,15 +3,16 @@ package fabiel.casas.rijksmuseumapp.ui.screens.collections
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -36,6 +37,7 @@ import coil.request.ImageRequest
 import coil.size.Scale
 import fabiel.casas.rijksmuseumapp.AppConstants.collectionStateSample
 import fabiel.casas.rijksmuseumapp.R
+import fabiel.casas.rijksmuseumapp.ui.componets.LoadingContent
 import fabiel.casas.rijksmuseumapp.ui.theme.RijksMuseumAppTheme
 import org.koin.androidx.compose.getViewModel
 
@@ -84,6 +86,20 @@ private fun CollectionContent(
             content = {
                 val derivedGroup = derivedStateOf {
                     lazyPagingItems.groupBy { it.author }
+                }
+                if (lazyPagingItems.loadState.refresh == LoadState.Loading) {
+                    item {
+                        Column {
+                            Text(
+                                text = stringResource(R.string.waiting_for_items),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .wrapContentWidth(Alignment.CenterHorizontally)
+                            )
+                            Spacer(modifier = Modifier.height(8.dp))
+                            LoadingContent()
+                        }
+                    }
                 }
                 derivedGroup.value.keys.toList()
                     .forEach { header ->
@@ -149,16 +165,6 @@ private inline fun <T : Any, K> LazyPagingItems<T>.groupBy(keySelector: (T) -> K
         }
     }
     return map
-}
-
-@Composable
-private fun LoadingContent() {
-    CircularProgressIndicator(
-        modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentWidth(Alignment.CenterHorizontally),
-        color = MaterialTheme.colorScheme.primary,
-    )
 }
 
 @Composable

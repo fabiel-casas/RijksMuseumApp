@@ -21,7 +21,7 @@ data class ArtObjectDetail(
     val colorsWithNormalization: List<ColorsWithNormalization>,
     val copyrightHolder: Any,
     val dating: Dating,
-    val description: String,
+    val description: String?,
     val dimensions: List<Dimension>,
     val documentation: List<Any>,
     val exhibitions: List<Any>,
@@ -29,7 +29,7 @@ data class ArtObjectDetail(
     val historicalPersons: List<Any>,
     val id: String,
     val inscriptions: List<Any>,
-    val label: Label,
+    val label: Label?,
     val labelText: Any,
     val language: String,
     val links: Links,
@@ -45,8 +45,8 @@ data class ArtObjectDetail(
     val objectTypes: List<String>,
     val physicalMedium: String,
     val physicalProperties: List<Any>,
-    val plaqueDescriptionDutch: String,
-    val plaqueDescriptionEnglish: Any,
+    val plaqueDescriptionDutch: String?,
+    val plaqueDescriptionEnglish: String?,
     val principalMaker: String,
     val principalMakers: List<PrincipalMaker>,
     val principalOrFirstMaker: String,
@@ -60,7 +60,7 @@ data class ArtObjectDetail(
     val techniquesThesaurus: List<Any>,
     val title: String,
     val titles: List<String>,
-    val webImage: WebImage
+    val webImage: WebImage?
 )
 
 data class ArtObjectPage(
@@ -72,7 +72,7 @@ data class ArtObjectPage(
     val id: String,
     val lang: String,
     val objectNumber: String,
-    val plaqueDescription: String,
+    val plaqueDescription: String?,
     val similarPages: List<Any>,
     val tags: List<Any>,
     val updatedOn: String
@@ -123,10 +123,10 @@ data class Dimension(
 
 data class Label(
     val date: String,
-    val description: String,
+    val description: String?,
     val makerLine: String,
     val notes: String,
-    val title: String
+    val title: String?,
 )
 
 data class Normalized32Color(

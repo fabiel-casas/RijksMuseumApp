@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_nav_host"
+    app:startDestination="@id/collectionFragment">
+
+    <fragment
+        android:id="@+id/collectionFragment"
+        android:name="fabiel.casas.rijksmuseumapp.navigation.CollectionFragment"
+        android:label="CollectionFragment" >
+        <action
+            android:id="@+id/action_collectionFragment_to_collectionDetailFragment"
+            app:destination="@id/collectionDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/collectionDetailFragment"
+        android:name="fabiel.casas.rijksmuseumapp.navigation.CollectionDetailFragment"
+        android:label="CollectionDetailFragment" >
+        <argument
+            android:name="objectNumber"
+            app:argType="string" />
+    </fragment>
+</navigation>
