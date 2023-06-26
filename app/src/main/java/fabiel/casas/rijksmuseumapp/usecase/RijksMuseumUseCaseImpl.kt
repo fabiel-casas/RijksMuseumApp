@@ -43,7 +43,11 @@ class RijksMuseumUseCaseImpl(
     )
 
     override suspend fun getCollectionDetails(objectNumber: String): DetailsState {
-        return dataSource.findCollectionObject(objectNumber = objectNumber).toDetail()
+        return if (objectNumber.isNotEmpty()) {
+            dataSource.findCollectionObject(objectNumber = objectNumber).toDetail()
+        } else {
+            throw Exception("objectNumber error")
+        }
     }
 
     private fun CollectionObjectResponse.toDetail() = DetailsState(

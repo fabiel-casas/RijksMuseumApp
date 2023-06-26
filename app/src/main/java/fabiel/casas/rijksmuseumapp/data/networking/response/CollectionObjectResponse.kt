@@ -19,7 +19,7 @@ data class ArtObjectDetail(
     val classification: Classification,
     val colors: List<Color>,
     val colorsWithNormalization: List<ColorsWithNormalization>,
-    val copyrightHolder: Any,
+    val copyrightHolder: String?,
     val dating: Dating,
     val description: String?,
     val dimensions: List<Dimension>,
