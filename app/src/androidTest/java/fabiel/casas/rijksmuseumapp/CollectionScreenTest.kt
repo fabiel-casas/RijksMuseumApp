@@ -3,6 +3,7 @@ package fabiel.casas.rijksmuseumapp
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import fabiel.casas.rijksmuseumapp.ui.screens.collections.CollectionScreen
 import fabiel.casas.rijksmuseumapp.ui.screens.collections.CollectionViewModel
@@ -50,10 +51,14 @@ class CollectionScreenTest: KoinTest {
     fun loadCollections_assertTitleDisplay() {
         composeTestRule.setContent {
             RijksMuseumAppTheme {
-                CollectionScreen(onNavDetailCollectionAction = {})
+                CollectionScreen(onNavDetailCollectionAction = {
+                    println("**** Item clicked $it")
+                })
             }
         }
         composeTestRule.onNodeWithText(text = "Waiting for items to load from the backend").assertIsDisplayed()
         composeTestRule.onNodeWithText(text = "RijksMuseum").assertIsDisplayed()
+        composeTestRule.onNodeWithText(text = "The Massacre of the Innocents").assertIsDisplayed()
+        composeTestRule.onNodeWithText(text = "The Massacre of the Innocents").performClick()
     }
 }
