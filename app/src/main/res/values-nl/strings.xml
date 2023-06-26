@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="waiting_for_items">Wachten op het laden van items van de server</string>
+    <string name="period">Periode: %1$s</string>
+    <string name="presenting_date">Presentatiedatum: %1$s</string>
+</resources>
