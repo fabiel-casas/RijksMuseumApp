@@ -24,8 +24,7 @@ class RijksMuseumUseCaseTest {
     @Test(expected = Exception::class)
     fun getCollectionDetails_givenAEmptyObjectNumber_throwException() {
         testScope.runTest {
-            val result = rijksMuseumUseCase.getCollectionDetails("")
-            Truth.assertThat(result).isEqualTo(AppConstants.detailsState)
+            rijksMuseumUseCase.getCollectionDetails("")
         }
     }
 
