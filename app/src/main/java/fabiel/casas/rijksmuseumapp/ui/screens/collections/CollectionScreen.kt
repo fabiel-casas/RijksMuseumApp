@@ -3,6 +3,8 @@ package fabiel.casas.rijksmuseumapp.ui.screens.collections
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.MutableWindowInsets
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -58,13 +60,20 @@ fun CollectionScreen(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@OptIn(
+    ExperimentalMaterial3Api::class,
+    ExperimentalFoundationApi::class,
+    ExperimentalLayoutApi::class
+)
 @Composable
 private fun CollectionContent(
     state: CollectionState,
     onNavDetailCollectionAction: (CollectionItemState) -> Unit,
 ) {
     val lazyPagingItems = state.collection.collectAsLazyPagingItems()
+    val derivedGroup = derivedStateOf {
+        lazyPagingItems.groupBy { it.author }
+    }
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -79,68 +88,72 @@ private fun CollectionContent(
                     titleContentColor = MaterialTheme.colorScheme.primary,
                 )
             )
-        }
+        },
+        contentWindowInsets = MutableWindowInsets()
     ) { paddingValues ->
-        LazyColumn(
-            contentPadding = paddingValues,
-            content = {
-                val derivedGroup = derivedStateOf {
-                    lazyPagingItems.groupBy { it.author }
-                }
-                if (lazyPagingItems.loadState.refresh == LoadState.Loading) {
-                    item {
-                        Column {
-                            Text(
-                                text = stringResource(R.string.waiting_for_items),
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .wrapContentWidth(Alignment.CenterHorizontally)
-                            )
-                            Spacer(modifier = Modifier.height(8.dp))
+        Column(
+            modifier = Modifier
+            .fillMaxSize()
+            .padding(paddingValues)
+        ) {
+            LazyColumn(
+                content = {
+                    if (lazyPagingItems.loadState.refresh == LoadState.Loading) {
+                        item {
+                            Column {
+                                Text(
+                                    text = stringResource(R.string.waiting_for_items),
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .wrapContentWidth(Alignment.CenterHorizontally)
+                                )
+                                Spacer(modifier = Modifier.height(8.dp))
+                                LoadingContent()
+                            }
+                        }
+                    }
+                    derivedGroup.value.keys.toList()
+                        .forEach { header ->
+                            stickyHeader {
+                                Surface(
+                                    color = MaterialTheme.colorScheme.primaryContainer,
+                                    contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                                ) {
+                                    Text(
+                                        modifier = Modifier
+                                            .padding(horizontal = 16.dp, vertical = 8.dp)
+                                            .fillMaxWidth(),
+                                        text = header,
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        fontWeight = FontWeight.SemiBold,
+                                        maxLines = 1,
+                                    )
+                                }
+                            }
+                            items(derivedGroup.value[header] ?: emptyList(),
+                                key = { it.objectNumber }) { collectionItem ->
+                                CollectionItem(
+                                    modifier = Modifier
+                                        .padding(horizontal = 16.dp, vertical = 8.dp)
+                                        .clickable { onNavDetailCollectionAction(collectionItem) }
+                                        .fillMaxWidth(),
+                                    state = collectionItem
+                                )
+                                //This update the pager status to be able to load the next page.
+                                lazyPagingItems.findIndex { it.objectNumber == collectionItem.objectNumber }
+                                    ?.let {
+                                        lazyPagingItems[it]
+                                    }
+                            }
+                        }
+                    if (lazyPagingItems.loadState.append == LoadState.Loading) {
+                        item {
                             LoadingContent()
                         }
                     }
                 }
-                derivedGroup.value.keys.toList()
-                    .forEach { header ->
-                        stickyHeader {
-                            Surface(
-                                color = MaterialTheme.colorScheme.primaryContainer,
-                                contentColor = MaterialTheme.colorScheme.onPrimaryContainer
-                            ) {
-                                Text(
-                                    modifier = Modifier
-                                        .padding(horizontal = 16.dp, vertical = 8.dp)
-                                        .fillMaxWidth(),
-                                    text = header,
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    fontWeight = FontWeight.SemiBold,
-                                    maxLines = 1,
-                                )
-                            }
-                        }
-                        items(derivedGroup.value[header] ?: emptyList(), key = { it.objectNumber }) { collectionItem ->
-                            CollectionItem(
-                                modifier = Modifier
-                                    .padding(horizontal = 16.dp, vertical = 8.dp)
-                                    .clickable { onNavDetailCollectionAction(collectionItem) }
-                                    .fillMaxWidth(),
-                                state = collectionItem
-                            )
-                            //This update the pager status to be able to load the next page.
-                            lazyPagingItems.findIndex { it.objectNumber == collectionItem.objectNumber }
-                                ?.let {
-                                    lazyPagingItems[it]
-                                }
-                        }
-                    }
-                if (lazyPagingItems.loadState.append == LoadState.Loading) {
-                    item {
-                        LoadingContent()
-                    }
-                }
-            }
-        )
+            )
+        }
     }
 }
 

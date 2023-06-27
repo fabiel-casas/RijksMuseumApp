@@ -18,6 +18,8 @@ interface RijksMuseumApi {
         @Query("key") key: String,
         @Query("p") page: Int,
         @Query("ps") pageSize: Int,
+        @Query("imgonly") imgonly: Boolean = true,
+        @Query("toppieces") toppieces: Boolean = true,
         @Query("s") sortBy: String,
     ): CollectionResponse
 

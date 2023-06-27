@@ -16,6 +16,8 @@ class RijksMuseumApiFake: RijksMuseumApi {
         key: String,
         page: Int,
         pageSize: Int,
+        imgonly: Boolean,
+        toppieces: Boolean,
         sortBy: String
     ): CollectionResponse  = CollectionResponse(
         artObjects = emptyList(),
