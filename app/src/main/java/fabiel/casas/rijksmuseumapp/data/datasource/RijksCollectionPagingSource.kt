@@ -39,7 +39,9 @@ class RijksCollectionPagingSource(
                 nextKey = if (resultList.isEmpty()) null else page + 1
             )
         } else {
-            LoadResult.Error(result.exceptionOrNull() ?: Exception())
+            val error = result.exceptionOrNull()
+            error?.printStackTrace()
+            LoadResult.Error(error ?: Exception())
         }
     }
 }
